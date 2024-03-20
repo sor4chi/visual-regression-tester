@@ -3,14 +3,20 @@
   "version": "0.0.1",
   "description": "A visual regression tester, minimum and scalable",
   "scripts": {
-    "start": "tsx src/index.ts"
+    "start": "npm run clean && npm run capture && npm run vrt",
+    "clean": "tsx src/clean.ts",
+    "capture": "tsx src/capture.ts",
+    "vrt": "reg-cli ./actual ./expected ./diff -M 0.15 -T 0.005 -I -J ./diff/report.json"
   },
   "dependencies": {
+    "picocolors": "^1.0.0",
     "playwright": "^1.42.1",
-    "reg-suit": "^0.14.3",
-    "tsx": "^4.7.1"
+    "reg-cli": "^0.18.1",
+    "tsx": "^4.7.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.2"
+    "@tsconfig/node20": "^20.1.2",
+    "@types/node": "^20.11.30"
   }
 }
