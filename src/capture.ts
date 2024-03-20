@@ -25,6 +25,9 @@ const configSchema = z.object({
 });
 const config = configSchema.parse(rawConfig);
 
+const totalScreenshots = config.viewports.length * config.paths.length;
+let currentScreenshot = 0;
+
 (async () => {
   console.log(pico.blue(`Capturing screenshots of ${config.baseUrl}`));
   for (const { width, height, name: vpName } of config.viewports) {
@@ -39,7 +42,10 @@ const config = configSchema.parse(rawConfig);
 
     for (const { path, name: pathName } of config.paths) {
       const actualPath = `${ACTUAL_PATH}/${pathName} - ${vpName}.png`;
-      console.log(pico.yellow(`Capturing ${path} with ${vpName}`));
+      console.log(
+        pico.yellow(`Capturing ${path} with ${vpName}`),
+        `(${++currentScreenshot}/${totalScreenshots})`
+      );
 
       await page.goto(`${config.baseUrl}${path}`, {
         waitUntil: config.waitUntil,
